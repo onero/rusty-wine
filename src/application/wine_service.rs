@@ -57,6 +57,10 @@ impl WineInboundPort for WineService {
             })
         }
     }
+
+    fn delete_wine(&self, wine_id: i32) -> bool {
+        self.wine_repository.delete_wine(wine_id)
+    }
 }
 
 #[cfg(test)]
@@ -108,6 +112,10 @@ mod tests {
                 price: new_wine.price,
             })
         }
+
+        fn delete_wine(&self, id: i32) -> bool {
+            true
+        }
     }
 
     #[test]
@@ -150,5 +158,16 @@ mod tests {
         let wine = wine_service.add_wine(new_wine);
 
         assert_eq!(wine.unwrap().id, 1);
+    }
+
+    #[test]
+    fn delete_wine() {
+        let wine_service = WineService {
+            wine_repository: Arc::new(MockWineRepository {}),
+        };
+
+        let result = wine_service.delete_wine(1);
+
+        assert_eq!(result, true);
     }
 }

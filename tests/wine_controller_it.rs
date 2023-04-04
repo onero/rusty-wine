@@ -5,7 +5,7 @@ use rusty_wine::application::models::Wine;
 use rusty_wine::application::state::AppState;
 use rusty_wine::application::wine_service::WineService;
 use rusty_wine::inbound::api::dto_models::NewWineDto;
-use rusty_wine::inbound::api::wine_controller::{add_wine, get_wine, get_wines};
+use rusty_wine::inbound::api::wine_controller::{add_wine, remove_wine, get_wine, get_wines};
 use rusty_wine::outbound::repositories::wine_in_memory_repository;
 
 const BASE_URL: &str = "/wine";
@@ -151,6 +151,60 @@ async fn should_return_bad_request_given_invalid_input_when_adding_wine() {
     let response = test::call_service(&mut app, req).await;
 
     assert_eq!(response.status(), http::StatusCode::BAD_REQUEST);
+}
+
+#[test]
+async fn should_remove_wine_given_valid_id() {
+    // Arrange
+    let app_state = setup_app_state();
+    let mut app =
+        test::init_service(
+            App::new()
+                .app_data(app_state.clone())
+                .service(remove_wine)
+        ).await;
+
+    let valid_id = 1;
+
+    // Act
+    let req = test::TestRequest::delete()
+        .uri(format!("{}/{}",
+                     BASE_URL,
+                     valid_id)
+            .as_str()
+        )
+        .to_request();
+    let response = test::call_service(&mut app, req).await;
+
+    // Assert
+    assert_eq!(response.status(), http::StatusCode::OK);
+}
+
+#[test]
+async fn should_return_not_found_when_removing_wine_given_invalid_id() {
+    // Arrange
+    let app_state = setup_app_state();
+    let mut app =
+        test::init_service(
+            App::new()
+                .app_data(app_state.clone())
+                .service(remove_wine)
+        ).await;
+
+    let invalid_id = 9999;
+
+    // Act
+    let req = test::TestRequest::delete()
+        .uri(format!("{}/{}",
+                     BASE_URL,
+                     invalid_id)
+            .as_str()
+        )
+        .to_request();
+    let response = test::call_service(&mut app, req).await;
+
+    // Assert
+    assert_eq!(response.status(), http::StatusCode::NOT_FOUND);
 }
 
 fn setup_app_state() -> Data<AppState> {

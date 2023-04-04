@@ -67,4 +67,12 @@ impl WineOutboundPort for WinePostgresRepository {
                 price: wine_db.price,
             })
     }
+
+    fn delete_wine(&self, wine_id: i32) -> bool {
+        let mut connection = establish_connection();
+
+        diesel::delete(wines.filter(id.eq(wine_id)))
+            .execute(&mut connection)
+            .is_ok()
+    }
 }

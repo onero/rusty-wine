@@ -1,10 +1,11 @@
 use std::sync::{Arc};
 
 use actix_web::{App, guard, HttpResponse, HttpServer, Responder, web};
+use actix_web::web::delete;
 
 use rusty_wine::application::state::AppState;
 use rusty_wine::application::wine_service::WineService;
-use rusty_wine::inbound::api::wine_controller::{add_wine, get_wine, get_wines};
+use rusty_wine::inbound::api::wine_controller::{add_wine, remove_wine, get_wine, get_wines};
 use rusty_wine::outbound::repositories::*;
 
 #[actix_web::main]
@@ -20,6 +21,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_wine)
             .service(get_wines)
             .service(add_wine)
+            .service(remove_wine)
             .default_service(
                 web::route()
                     .guard(guard::Not(guard::Get()))

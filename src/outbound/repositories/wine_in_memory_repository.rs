@@ -54,4 +54,13 @@ impl WineOutboundPort for WineInMemoryRepository {
             price: new_wine.price
         });
     }
+
+    fn delete_wine(&self, id: i32) -> bool {
+        let not_found_id = 9999;
+        if id == not_found_id {
+            return false;
+        }
+
+        return true;
+    }
 }

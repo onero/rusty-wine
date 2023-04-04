@@ -4,4 +4,5 @@ pub trait WineInboundPort: Send + Sync {
     fn get_by_id(&self, id: i32) -> Option<Wine>;
     fn get_all(&self) -> Option<Vec<Wine>>;
     fn add_wine(&self, new_wine: NewWine) -> Option<Wine>;
+    fn delete_wine(&self, id: i32) -> bool;
 }
