@@ -149,6 +149,7 @@ async fn should_return_bad_request_given_invalid_input_when_adding_wine() {
         .to_request();
     let response = test::call_service(&mut app, req).await;
 
+    // Assert
     assert_eq!(response.status(), http::StatusCode::BAD_REQUEST);
 }
 
