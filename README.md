@@ -1,17 +1,18 @@
 # Rusty Wine
+
 rusty-wine is a sample Rust project showcasing a simple wine inventory system using the Hexagonal Architecture.
 
 ## Architecture
+
 The architecture of rusty-wine follows the Hexagonal Architecture pattern (Ports & Adapters):
 
-See [following article](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)#:~:text=The%20hexagonal%20architecture%2C%20or%20ports,means%20of%20ports%20and%20adapters.) for more details
+See [following article](<https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)#:~:text=The%20hexagonal%20architecture%2C%20or%20ports,means%20of%20ports%20and%20adapters.>) for more details
 
 Additionally these articles are recommended:
 
 [Hexagonal Architecture - What is it? Why should you use it?](https://www.happycoders.eu/software-craftsmanship/hexagonal-architecture/)
 
 [Netflix - Ready for changes with Hexagonal Architecture](https://netflixtechblog.com/ready-for-changes-with-hexagonal-architecture-b315ec967749)
-
 
 ![Architecture](img/architecture.png)
 
@@ -20,6 +21,7 @@ Additionally these articles are recommended:
 - Outbound: manages the persistence of data to a data store.
 
 ## Technologies
+
 - Rust: a systems programming language that provides speed, memory safety, and parallelism, making it ideal for building web applications that require high performance and low resource consumption.
 - Docker: a platform for developing, shipping, and running applications.
 - Actix-web: a powerful web framework built in Rust that is fast, flexible, and easy to use.
@@ -28,20 +30,29 @@ Additionally these articles are recommended:
 - PostgreSQL: a popular open-source relational database management system that provides powerful features for managing large datasets.
 
 ## Getting Started
+
 To get started with rusty-wine, you'll need to [install Rust](https://www.rust-lang.org/tools/install) in order to run the project and [Docker](https://docs.docker.com/get-docker/) to run the database.
 
-- Clone the repository: ```git clone https://github.com/onero/rusty-wine.git```
-- Run ```docker-compose up -d``` to start the database (as a background process)
-- Install Diesel CLI: ```cargo install diesel_cli --no-default-features --features postgres```
-- Create the database: ```diesel setup```
-- Run the migrations: ```diesel migration run``` (or ```diesel migration redo``` to reset the database)
-- Start the server: ```make watch```
+- Clone the repository: `git clone https://github.com/onero/rusty-wine.git`
+- Make sure to have libpq installed & updated with
 
-This will start the application on http://localhost:7878. 
+  `sudo apt-get update`
+
+  `sudo apt-get install libpq-dev`
+
+- Run `docker-compose up -d` to start the database (as a background process)
+- Install Diesel CLI: `cargo install diesel_cli --no-default-features --features postgres`
+- Create the database: `diesel setup`
+- Run the migrations: `diesel migration run` (or `diesel migration redo` to reset the database)
+- Start the server: `make watch`
+
+This will start the application on http://localhost:7878.
 You can use a REST client or a GraphQL client to interact with the application endpoints.
 
 ## Usage
+
 ### RESTful API
+
 The RESTful API allows you to manage the wine inventory. The following endpoints are available:
 
 ![getWines-rest](img/getWines-rest.png)
@@ -55,6 +66,7 @@ The RESTful API allows you to manage the wine inventory. The following endpoints
 `DELETE /wines/{id}`: Remove a wine from the inventory by ID.
 
 ### GraphQL API
+
 The GraphQL API allows you to query and mutate the wine inventory. The following queries and mutations are available:
 
 GraphiQL is available at http://localhost:7878/graphql.
@@ -75,41 +87,44 @@ price
 name,
 description,
 year,
-price 
-} 
+price
+}
 }`: Get a specific wine by ID.
 
-`mutation { 
-addWine(name: "Barolo", year: 2012) 
-{ 
+`mutation {
+addWine(name: "Barolo", year: 2012)
+{
 id,
 name,
 description,
 year,
 price
-} 
+}
 }`: Add a new wine to the inventory.
 
-`mutation { 
-removeWine(id: 1) 
-{ 
+`mutation {
+removeWine(id: 1)
+{
 id,
 name,
 description,
 year,
-price 
-} 
+price
+}
 }`: Remove a wine from the inventory by ID.
 
 ## Tests
+
 This project contains unit tests for the application and integration tests for the RESTful API.
 
 To run the tests in watch-mode, use the following command:
 
-```make watch-test```
+`make watch-test`
 
 ## Contributing
+
 Contributions to this project are welcome. Please create a pull request with your changes.
 
 ## License
+
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
