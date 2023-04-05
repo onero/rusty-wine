@@ -4,7 +4,7 @@ rusty-wine is a sample Rust project showcasing a simple wine inventory system us
 ## Architecture
 The architecture of rusty-wine follows the Hexagonal Architecture pattern (Ports & Adapters):
 
-![img.png](architecture.png)
+![Architecture](img/architecture.png)
 
 - Inbound: handles incoming requests and responses (REST and GraphQL).
 - Application: implements the business logic of the system, using services and entities.
@@ -35,6 +35,8 @@ You can use a REST client or a GraphQL client to interact with the application e
 ### RESTful API
 The RESTful API allows you to manage the wine inventory. The following endpoints are available:
 
+![getWines-rest](img/getWines-rest.png)
+
 `GET /wines`: Get a list of all wines in the inventory.
 
 `GET /wines/{id}`: Get a specific wine by ID.
@@ -47,6 +49,8 @@ The RESTful API allows you to manage the wine inventory. The following endpoints
 The GraphQL API allows you to query and mutate the wine inventory. The following queries and mutations are available:
 
 GraphiQL is available at http://localhost:7878/graphql.
+
+![getWines-graphql](img/getWines-graphiql.png)
 
 `query {
 getWines {
