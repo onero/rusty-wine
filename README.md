@@ -3,6 +3,13 @@ rusty-wine is a sample Rust project showcasing a simple wine inventory system us
 
 ## Architecture
 The architecture of rusty-wine follows the Hexagonal Architecture pattern (Ports & Adapters):
+See [following article](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)#:~:text=The%20hexagonal%20architecture%2C%20or%20ports,means%20of%20ports%20and%20adapters.) for more details
+Additionally these articles are recommended:
+
+[Hexagonal Architecture - What is it? Why should you use it?](https://www.happycoders.eu/software-craftsmanship/hexagonal-architecture/)
+
+[Netflix - Ready for changes with Hexagonal Architecture](https://netflixtechblog.com/ready-for-changes-with-hexagonal-architecture-b315ec967749)
+
 
 ![Architecture](img/architecture.png)
 
