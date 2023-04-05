@@ -2,9 +2,9 @@ use actix_web::web::{Json, Path};
 use actix_web::{get, post, delete, HttpResponse, Responder, Result, web};
 use crate::application::models::Wine;
 use crate::application::state::AppState;
-use crate::inbound::rest::api_mapper::ApiMapper;
-use crate::inbound::rest::dto_mapper::NewWinemapper;
-use crate::inbound::rest::dto_models::NewWineDto;
+use crate::application::ports::api_mapper_port::ApiMapperPort;
+use crate::inbound::dto_mapper::{NewWineMapper, WineMapper};
+use crate::inbound::dto_models::{NewWineDto, WineDto};
 
 #[get("/wine/{wine_id}")]
 pub async fn get_wine(wine_id: Path<i32>,
@@ -17,7 +17,8 @@ pub async fn get_wine(wine_id: Path<i32>,
     match wine_option {
         None => Ok(HttpResponse::NotFound().finish().into()),
         Some(wine) => {
-            Ok(HttpResponse::Ok().json(wine))
+            let response = WineMapper::map_to_dto(&wine);
+            Ok(HttpResponse::Ok().json(response))
         }
     }
 }
@@ -29,7 +30,11 @@ pub async fn get_wines(state: web::Data<AppState>) -> Result<impl Responder> {
     match wines_option {
         None => Ok(HttpResponse::InternalServerError().finish().into()),
         Some(wines) => {
-            Ok(HttpResponse::Ok().json(wines))
+            let response: Vec<WineDto> = wines
+                .iter()
+                .map(|wine| WineMapper::map_to_dto(wine))
+                .collect();
+            Ok(HttpResponse::Ok().json(response))
         }
     }
 }
@@ -38,14 +43,15 @@ pub async fn get_wines(state: web::Data<AppState>) -> Result<impl Responder> {
 pub async fn add_wine(new_wine: Json<NewWineDto>, state: web::Data<AppState>) -> Result<impl Responder> {
     let new_wine_dto = new_wine.into_inner();
 
-    let new_wine_entity = NewWinemapper::map_to_entity(new_wine_dto);
+    let new_wine_entity = NewWineMapper::map_to_entity(new_wine_dto);
 
     let added_wine: Option<Wine> = state.wine_service.add_wine(new_wine_entity);
 
     match added_wine {
         None => Ok(HttpResponse::InternalServerError().finish().into()),
         Some(wine) => {
-            Ok(HttpResponse::Ok().json(wine))
+            let response = WineMapper::map_to_dto(&wine);
+            Ok(HttpResponse::Ok().json(response))
         }
     }
 }

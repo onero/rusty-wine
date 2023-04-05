@@ -3,7 +3,7 @@ use std::sync::Arc;
 use actix_web::{App, guard, HttpResponse, HttpServer, Responder, web};
 use rusty_wine::application::wine_service::WineService;
 use rusty_wine::inbound::rest::wine_controller::{add_wine, get_wine, get_wines, remove_wine};
-use rusty_wine::inbound::graphql::graphql_schema::{create_schema, WineMutation, WineQuery, WineSchema};
+use rusty_wine::inbound::graphql::graphql_schema::{WineMutation, WineQuery};
 use rusty_wine::infrastructure::graphql::{index, index_graphiql};
 use rusty_wine::outbound::repositories::wine_postgres_repository;
 use async_graphql::{EmptySubscription, Schema};

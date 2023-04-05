@@ -1,10 +1,9 @@
 use std::sync::Arc;
 use actix_web::{App, http, test, web};
 use actix_web::web::Data;
-use rusty_wine::application::models::Wine;
 use rusty_wine::application::state::AppState;
 use rusty_wine::application::wine_service::WineService;
-use rusty_wine::inbound::rest::dto_models::NewWineDto;
+use rusty_wine::inbound::dto_models::{NewWineDto, WineDto};
 use rusty_wine::inbound::rest::wine_controller::{add_wine, remove_wine, get_wine, get_wines};
 use rusty_wine::outbound::repositories::wine_in_memory_repository;
 
@@ -28,7 +27,7 @@ async fn should_list_wines() {
     // Assert
     assert_eq!(response.status(), http::StatusCode::OK);
 
-    let result: Vec<Wine> = test::read_body_json(response).await;
+    let result: Vec<WineDto> = test::read_body_json(response).await;
 
     assert!(!result.is_empty())
 }
@@ -59,7 +58,7 @@ async fn should_list_wine_by_id_given_valid_id() {
     // Assert
     assert_eq!(response.status(), http::StatusCode::OK);
 
-    let wine_dto: Wine = test::read_body_json(response).await;
+    let wine_dto: WineDto = test::read_body_json(response).await;
     assert_eq!(wine_dto.id, valid_id);
 }
 
@@ -120,7 +119,7 @@ async fn should_add_new_wine_given_valid_input() {
     // Assert
     assert_eq!(response.status(), http::StatusCode::OK);
 
-    let result: Wine = test::read_body_json(response).await;
+    let result: WineDto = test::read_body_json(response).await;
     assert_eq!(result.name, new_wine.name);
     assert_eq!(result.year, new_wine.year);
     assert_eq!(result.description, new_wine.description);

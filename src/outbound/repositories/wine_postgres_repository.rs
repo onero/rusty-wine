@@ -1,6 +1,6 @@
 use diesel::prelude::*;
 use crate::application::models::{NewWine, Wine};
-use crate::application::outbound_ports::WineOutboundPort;
+use crate::application::ports::outbound_ports::WineOutboundPort;
 use crate::infrastructure::postgres::establish_connection;
 use crate::infrastructure::schema::wines::dsl::wines;
 use crate::infrastructure::schema::wines::{description, id, name, price, year};

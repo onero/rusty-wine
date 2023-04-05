@@ -1,10 +1,34 @@
-use crate::application::models::NewWine;
-use crate::inbound::rest::api_mapper::ApiMapper;
-use crate::inbound::rest::dto_models::NewWineDto;
+use crate::application::models::{NewWine, Wine};
+use crate::application::ports::api_mapper_port::ApiMapperPort;
+use crate::inbound::dto_models::{NewWineDto, WineDto};
 
-pub struct NewWinemapper {}
+pub struct WineMapper {}
 
-impl ApiMapper<NewWine, NewWineDto> for NewWinemapper {
+impl ApiMapperPort<Wine, WineDto> for WineMapper {
+    fn map_to_entity(dto: WineDto) -> Wine {
+        Wine {
+            id: dto.id,
+            name: dto.name.clone(),
+            year: dto.year,
+            description: dto.description.clone(),
+            price: dto.price,
+        }
+    }
+
+    fn map_to_dto(entity: &Wine) -> WineDto {
+        WineDto {
+            id: entity.id,
+            name: entity.name.clone(),
+            year: entity.year,
+            description: entity.description.clone(),
+            price: entity.price,
+        }
+    }
+}
+
+pub struct NewWineMapper {}
+
+impl ApiMapperPort<NewWine, NewWineDto> for NewWineMapper {
     fn map_to_entity(dto: NewWineDto) -> NewWine {
         NewWine {
             name: dto.name.clone(),
@@ -27,9 +51,9 @@ impl ApiMapper<NewWine, NewWineDto> for NewWinemapper {
 #[cfg(test)]
 mod wine_mapper_tests {
     use crate::application::models::NewWine;
-    use crate::inbound::rest::api_mapper::ApiMapper;
-    use crate::inbound::rest::dto_models::NewWineDto;
-    use crate::inbound::rest::dto_mapper::NewWinemapper;
+    use crate::application::ports::api_mapper_port::ApiMapperPort;
+    use crate::inbound::dto_mapper::NewWineMapper;
+    use crate::inbound::dto_models::NewWineDto;
 
     #[test]
     fn wine_mapper_should_map_to_entity() {
@@ -47,7 +71,7 @@ mod wine_mapper_tests {
         };
 
         // Act
-        let entity = NewWinemapper::map_to_entity(dto);
+        let entity = NewWineMapper::map_to_entity(dto);
 
         // Assert
         assert_eq!(entity.name, wine_name.clone());
@@ -72,7 +96,7 @@ mod wine_mapper_tests {
         };
 
         // Act
-        let dto = NewWinemapper::map_to_dto(&entity);
+        let dto = NewWineMapper::map_to_dto(&entity);
 
         // Assert
         assert_eq!(dto.name, wine_name.clone());

@@ -1,7 +1,7 @@
 use std::sync::{Arc};
-use crate::application::inbound_ports::WineInboundPort;
+use crate::application::ports::inbound_ports::WineInboundPort;
 use crate::application::models::{NewWine, Wine};
-use crate::application::outbound_ports::WineOutboundPort;
+use crate::application::ports::outbound_ports::WineOutboundPort;
 
 pub struct WineService {
     pub wine_repository: Arc<dyn WineOutboundPort>,
@@ -65,9 +65,9 @@ impl WineInboundPort for WineService {
 
 #[cfg(test)]
 mod tests {
-    use crate::application::inbound_ports::WineInboundPort;
+    use crate::application::ports::inbound_ports::WineInboundPort;
     use crate::application::models::{NewWine, Wine};
-    use crate::application::outbound_ports::WineOutboundPort;
+    use crate::application::ports::outbound_ports::WineOutboundPort;
     use crate::application::wine_service::WineService;
     use std::sync::{Arc};
 
@@ -113,7 +113,7 @@ mod tests {
             })
         }
 
-        fn delete_wine(&self, id: i32) -> bool {
+        fn delete_wine(&self, _id: i32) -> bool {
             true
         }
     }

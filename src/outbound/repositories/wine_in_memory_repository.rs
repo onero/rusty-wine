@@ -1,5 +1,5 @@
 use crate::application::models::{NewWine, Wine};
-use crate::application::outbound_ports::WineOutboundPort;
+use crate::application::ports::outbound_ports::WineOutboundPort;
 
 pub struct WineInMemoryRepository {}
 
