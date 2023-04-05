@@ -30,6 +30,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
+            // GraphQL
             .app_data(graphql_state.clone())
             .service(web::resource("/graphql").guard(guard::Post()).to(index))
             .service(web::resource("/graphql").guard(guard::Get()).to(index_graphiql))
@@ -39,6 +40,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_wines)
             .service(add_wine)
             .service(remove_wine)
+            // Handle any other route
             .default_service(web::route().guard(guard::Not(guard::Get())).to(handle_unknown))
     })
         .bind(("127.0.0.1", 7878))?
