@@ -101,3 +101,6 @@ To run the tests in watch-mode, use the following command:
 
 ## Contributing
 Contributions to this project are welcome. Please create a pull request with your changes.
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
