@@ -14,11 +14,12 @@ async fn main() -> std::io::Result<()> {
     std::env::set_var("RUST_LOG", "debug");
     env_logger::init();
 
-    // Create wine service and wrap it with Arc
+    // Instantiate the rest_state, in order to expose the wine_service with its repository to the REST endpoints
     let wine_repository = Arc::new(wine_postgres_repository::WinePostgresRepository {});
     let wine_service = Arc::new(WineService { wine_repository });
     let rest_state = web::Data::new(AppState { wine_service: wine_service.clone() });
 
+    // Instantiate the graphql_state, in order to expose the wine_service with its repository to the GraphQL endpoints
     let graphql_schema = Schema::build(WineQuery, WineMutation, EmptySubscription)
         .data(wine_service)
         .finish();
@@ -29,12 +30,11 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
-            .app_data(rest_state.clone())
             .app_data(graphql_state.clone())
             .service(web::resource("/graphql").guard(guard::Post()).to(index))
             .service(web::resource("/graphql").guard(guard::Get()).to(index_graphiql))
-
             // REST
+            .app_data(rest_state.clone())
             .service(get_wine)
             .service(get_wines)
             .service(add_wine)
