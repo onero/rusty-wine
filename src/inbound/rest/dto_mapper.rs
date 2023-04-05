@@ -1,6 +1,6 @@
 use crate::application::models::NewWine;
-use crate::inbound::api::api_mapper::ApiMapper;
-use crate::inbound::api::dto_models::NewWineDto;
+use crate::inbound::rest::api_mapper::ApiMapper;
+use crate::inbound::rest::dto_models::NewWineDto;
 
 pub struct NewWinemapper {}
 
@@ -27,9 +27,9 @@ impl ApiMapper<NewWine, NewWineDto> for NewWinemapper {
 #[cfg(test)]
 mod wine_mapper_tests {
     use crate::application::models::NewWine;
-    use crate::inbound::api::api_mapper::ApiMapper;
-    use crate::inbound::api::dto_models::NewWineDto;
-    use crate::inbound::api::dto_mapper::NewWinemapper;
+    use crate::inbound::rest::api_mapper::ApiMapper;
+    use crate::inbound::rest::dto_models::NewWineDto;
+    use crate::inbound::rest::dto_mapper::NewWinemapper;
 
     #[test]
     fn wine_mapper_should_map_to_entity() {

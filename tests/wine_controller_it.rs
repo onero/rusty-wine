@@ -4,8 +4,8 @@ use actix_web::web::Data;
 use rusty_wine::application::models::Wine;
 use rusty_wine::application::state::AppState;
 use rusty_wine::application::wine_service::WineService;
-use rusty_wine::inbound::api::dto_models::NewWineDto;
-use rusty_wine::inbound::api::wine_controller::{add_wine, remove_wine, get_wine, get_wines};
+use rusty_wine::inbound::rest::dto_models::NewWineDto;
+use rusty_wine::inbound::rest::wine_controller::{add_wine, remove_wine, get_wine, get_wines};
 use rusty_wine::outbound::repositories::wine_in_memory_repository;
 
 const BASE_URL: &str = "/wine";

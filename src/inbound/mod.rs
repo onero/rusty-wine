@@ -1,1 +1,2 @@
-pub mod api;
+pub mod rest;
+pub mod graphql;

@@ -2,9 +2,9 @@ use actix_web::web::{Json, Path};
 use actix_web::{get, post, delete, HttpResponse, Responder, Result, web};
 use crate::application::models::Wine;
 use crate::application::state::AppState;
-use crate::inbound::api::api_mapper::ApiMapper;
-use crate::inbound::api::dto_mapper::NewWinemapper;
-use crate::inbound::api::dto_models::NewWineDto;
+use crate::inbound::rest::api_mapper::ApiMapper;
+use crate::inbound::rest::dto_mapper::NewWinemapper;
+use crate::inbound::rest::dto_models::NewWineDto;
 
 #[get("/wine/{wine_id}")]
 pub async fn get_wine(wine_id: Path<i32>,

@@ -1,6 +1,7 @@
+use async_graphql::InputObject;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, InputObject)]
 pub struct NewWineDto {
     pub name: String,
     pub description: String,
