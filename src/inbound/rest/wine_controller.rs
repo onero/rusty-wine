@@ -8,8 +8,7 @@ use crate::inbound::dto_models::{NewWineDto, WineDto};
 
 #[get("/wine/{wine_id}")]
 pub async fn get_wine(wine_id: Path<i32>,
-                      state: web::Data<AppState>
-) -> Result<impl Responder> {
+                      state: web::Data<AppState>) -> Result<impl Responder> {
     let wine_id = wine_id.into_inner();
 
     let wine_option: Option<Wine> = state.wine_service.get_by_id(wine_id);
@@ -40,7 +39,8 @@ pub async fn get_wines(state: web::Data<AppState>) -> Result<impl Responder> {
 }
 
 #[post("/wine")]
-pub async fn add_wine(new_wine: Json<NewWineDto>, state: web::Data<AppState>) -> Result<impl Responder> {
+pub async fn add_wine(new_wine: Json<NewWineDto>, 
+                      state: web::Data<AppState>) -> Result<impl Responder> {
     let new_wine_dto = new_wine.into_inner();
 
     let new_wine_entity = NewWineMapper::map_to_entity(new_wine_dto);
@@ -57,7 +57,8 @@ pub async fn add_wine(new_wine: Json<NewWineDto>, state: web::Data<AppState>) ->
 }
 
 #[delete("/wine/{wine_id}")]
-pub async fn remove_wine(wine_id: Path<i32>, state: web::Data<AppState>) -> Result<impl Responder> {
+pub async fn remove_wine(wine_id: Path<i32>, 
+                         state: web::Data<AppState>) -> Result<impl Responder> {
     let wine_id = wine_id.into_inner();
 
     let wine_to_be_deleted_option: Option<Wine> = state.wine_service.get_by_id(wine_id);
